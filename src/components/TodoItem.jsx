@@ -54,7 +54,7 @@ const destroyStyle = css`
 function TodoItem({todo}) {
   const [todos, setTodos] = useAtom(todosAtom);
 
-  const handleToggle = (id) => {
+  const toggleTodo = (id) => {
     setTodos(todos.map((todo) => {
       if(todo.id === id) {
         return {
@@ -65,18 +65,22 @@ function TodoItem({todo}) {
       return todo;
   }))};
 
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
   return (
     <li css={todoItemStyle} className='todo-item' key={todo.id}>
       <div>
         {
           todo.completed ? (
-            <CheckedSvg css={checkboxStyle} onClick={() => handleToggle(todo.id)}/>
+            <CheckedSvg css={checkboxStyle} onClick={() => toggleTodo(todo.id)}/>
           ) : (
-            <CheckSvg css={checkboxStyle} onClick={() => handleToggle(todo.id)} />
+            <CheckSvg css={checkboxStyle} onClick={() => toggleTodo(todo.id)} />
           )
         }
         <label css={labelStyle}>{todo.text}</label>
-        <button css={destroyStyle}>x</button>
+        <button css={destroyStyle} onClick={() => deleteTodo(todo.id)}>x</button>
       </div>
     </li>
   )
