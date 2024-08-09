@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { todosAtom } from '../atoms';
 import styled from '@emotion/styled'
-import { css } from '@emotion/react';
 import TodoList from './TodoList';
 import { useAtom } from 'jotai';
 
@@ -24,8 +23,6 @@ function TodoForm() {
   const [inputValue, setInputValue] = useState('');
   const [todos, setTodos] = useAtom(todosAtom);
 
-  console.log(todos);
-
   const handleSubmit = (e) => {
     if(e.key === 'Enter' && inputValue.trim() !== '') {
       e.preventDefault();
@@ -34,11 +31,10 @@ function TodoForm() {
         setInputValue('');
       }
     }
-    
   };
 
   return (
-    <div>
+    <section>
       <TodoInput
         class="new-todo"
         type="text"
@@ -48,7 +44,8 @@ function TodoForm() {
         placeholder="What needs to be done?"
       />
       <TodoList/>
-    </div>
+      {/* <TodoFooter/> */}
+    </section>
   );
 }
 
