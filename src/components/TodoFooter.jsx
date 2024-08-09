@@ -1,5 +1,4 @@
 import { useAtom } from 'jotai';
-import React, { useState } from 'react';
 import { filterAtom, todosAtom } from '../atoms';
 import styled from '@emotion/styled'
 import { css } from '@emotion/react';
@@ -7,7 +6,8 @@ import { css } from '@emotion/react';
 
 
 const StyledFooter = styled.footer`
-  display: block;
+  display: flex;
+  justify-content: space-between;
   padding: 10px 15px;
   border-top: 1px solid #e6e6e6;
   font-size: 15px;
@@ -16,7 +16,7 @@ const StyledFooter = styled.footer`
 `;
 
 const leftTodosStyle = css`
-  float: left;
+  text-align: left;
 `;
 
 const filterUlStyle = css`
@@ -26,6 +26,8 @@ const filterUlStyle = css`
   margin: 0;
   padding: 0;
   position: absolute;
+  text-align: center;
+
 `;
 
 const filterLiStyle = css`
@@ -50,7 +52,6 @@ const filterLinkStyle = (selected) => css`
 `;
 
 const clearCompletedStyle = css`
-  float: right;
   line-height: 19px;
   border: none;
   background: none;
@@ -60,16 +61,22 @@ const clearCompletedStyle = css`
   appearance: none;
   color: inherit;
   font-family: inherit;
-  font-size: 100%
+  font-size: 100%;
   font-weight: inherit;
+
+  z-index: 1;
 `;
 
 function TodoFooter() {
-  const [todos] = useAtom(todosAtom);
+  const [todos, setTodos] = useAtom(todosAtom);
 
   const leftTodos = todos.filter((todo) => !todo.completed);
 
   const [selectedFilter, setSelectedFilter] = useAtom(filterAtom);
+
+  const clickCompleted = () => {
+    setTodos(todos.filter((todo) => !todo.completed));
+  }
 
   return (
     <StyledFooter>
@@ -79,7 +86,7 @@ function TodoFooter() {
         <li css={filterLiStyle}><a href="#/active" css={filterLinkStyle(selectedFilter === 'active')} onClick={() => setSelectedFilter('active')}>Active</a></li>
         <li css={filterLiStyle}><a href="#/completed" css={filterLinkStyle(selectedFilter === 'completed')} onClick={() => setSelectedFilter('completed')}>Completed</a></li>
       </ul>
-      <button css={clearCompletedStyle}>Clear completed</button>
+      <button css={clearCompletedStyle} onClick={() => clickCompleted()}>Clear completed</button>
     </StyledFooter>
   )
 }

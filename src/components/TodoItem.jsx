@@ -12,15 +12,21 @@ const todoItemStyle = css`
 
   &:hover button {
     display: block;
+    line-height: 1.1;
   }
 `;
 
-const labelStyle = css`
+const labelStyle = (completed) => css`
   display: block;
   padding: 15px 15px 15px 60px;
   font-weight: 400;
   line-height: 1.2;
   color: #484848;
+
+  ${completed && `
+    color: #949494;
+    text-decoration: line-through;
+  `}
 `;
 
 const checkboxStyle = css`
@@ -33,7 +39,7 @@ const checkboxStyle = css`
   
 `;
 
-const destroyStyle = css`
+const deleteButtonStyle = css`
   position: absolute;
   bottom: 0;
   top: 0;
@@ -79,8 +85,8 @@ function TodoItem({todo}) {
             <CheckSvg css={checkboxStyle} onClick={() => toggleTodo(todo.id)} />
           )
         }
-        <label css={labelStyle}>{todo.text}</label>
-        <button css={destroyStyle} onClick={() => deleteTodo(todo.id)}>x</button>
+        <label css={labelStyle(todo.completed)}>{todo.text}</label>
+        <button css={deleteButtonStyle} onClick={() => deleteTodo(todo.id)}>×</button>
       </div>
     </li>
   )

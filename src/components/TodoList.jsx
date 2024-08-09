@@ -17,6 +17,8 @@ function TodoList() {
   const [todos] = useAtom(todosAtom);
   const [filter] = useAtom(filterAtom);
 
+  console.log(todos);
+
   const filteredTodos = todos.filter((todo) => {
     if(filter === 'active') return !todo.completed;
     if(filter === 'completed') return todo.completed;

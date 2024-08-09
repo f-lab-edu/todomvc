@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import { todosAtom } from '../atoms';
 import styled from '@emotion/styled'
 import TodoList from './TodoList';
 import { useAtom } from 'jotai';
 import TodoFooter from './TodoFooter';
+import { v4 as uuidv4 } from 'uuid';
 
 const TodoInput = styled.input`
   width: 550px;
@@ -32,7 +33,7 @@ function TodoForm() {
     if(e.key === 'Enter' && inputValue.trim() !== '') {
       e.preventDefault();
       if(inputValue.trim()) {
-        setTodos([...todos, {id: todos.length + 1, text: inputValue, completed: false}]);
+        setTodos([...todos, {id: uuidv4(), text: inputValue, completed: false}]);
         setInputValue('');
       }
     }
