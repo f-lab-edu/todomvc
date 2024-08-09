@@ -1,7 +1,7 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 import { useAtom } from 'jotai';
-import { todosAtom } from '../atoms';
+import { filterAtom, todosAtom } from '../atoms';
 import {css} from '@emotion/react';
 /** @jsxImportSource @emotion/react */
 
@@ -11,16 +11,21 @@ const todoListStyle = css`
   display:block;
   margin: 0;
   padding: 0;
-  background: #fff;
 `;
 
 function TodoList() {
   const [todos] = useAtom(todosAtom);
-  console.log(todos);
+  const [filter] = useAtom(filterAtom);
+
+  const filteredTodos = todos.filter((todo) => {
+    if(filter === 'active') return !todo.completed;
+    if(filter === 'completed') return todo.completed;
+    return true;
+  });
 
   return (
     <ul css={todoListStyle}>
-      {todos.map((todo) => 
+      {filteredTodos.map((todo) => 
         <TodoItem todo={todo} />
       )}
     </ul>

@@ -3,6 +3,7 @@ import { todosAtom } from '../atoms';
 import styled from '@emotion/styled'
 import TodoList from './TodoList';
 import { useAtom } from 'jotai';
+import TodoFooter from './TodoFooter';
 
 const TodoInput = styled.input`
   width: 550px;
@@ -17,6 +18,10 @@ const TodoInput = styled.input`
   font-family: inherit;
   font-weight: inherit;
   border: none;
+`;
+
+const StyledSection = styled.section`
+  background: #fff;
 `;
 
 function TodoForm() {
@@ -34,7 +39,7 @@ function TodoForm() {
   };
 
   return (
-    <section>
+    <StyledSection>
       <TodoInput
         class="new-todo"
         type="text"
@@ -44,8 +49,8 @@ function TodoForm() {
         placeholder="What needs to be done?"
       />
       <TodoList/>
-      {/* <TodoFooter/> */}
-    </section>
+      <TodoFooter/>
+    </StyledSection>
   );
 }
 
